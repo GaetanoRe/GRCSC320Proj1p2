@@ -13,7 +13,7 @@ import java.io.*;
  * @author Gaetano Re
  * 
  */
-public class Main {
+public class DataGenerator {
 	
 	public static void main(String [] args){
 		
