@@ -88,6 +88,16 @@ public class MyUnorderedList<T> {
 		return null;
 	}
 	
+	public int indexOf(T value) {
+		for(int i = 0; i < size; i++) {
+			if(value == list[i]) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	
 	public int size() {
 		return this.size;
 	}

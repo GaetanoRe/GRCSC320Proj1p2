@@ -1,9 +1,17 @@
 package project1p2;
-
+import java.io.*;
 public class MainProgram {
 	public static void main(String args []) {
+		
 		/*
-		MyUnorderedList<Integer> list = new MyUnorderedList<Integer>(4);
+		 * The comments below are a series of tests I did to make sure the data structures I utilized in the experiment
+		 * worked, since I had no access to any data structure I created in CS2. I wanted to make sure the methods worked as intended to get my
+		 * results accurate.
+		 */
+		
+		
+		
+		/*MyUnorderedList<Integer> list = new MyUnorderedList<Integer>(4);
 		
 		list.insertAtFront(1);
 		list.insertAtRear(2);
@@ -50,7 +58,7 @@ public class MainProgram {
 		
 		// Above were tests to see how the list performed under the following scenarios using integers.
 		
-		MyUnorderedList<String> list = new MyUnorderedList<String>(4);
+		/*MyUnorderedList<String> list = new MyUnorderedList<String>(4);
 		
 		list.insertAtFront("Apple");
 		list.insertAtRear("Orange");
@@ -95,7 +103,62 @@ public class MainProgram {
 		
 		// Expected outcome: Coconut, Mango, Orange, Fish, Plantain,
 		System.out.println(list.toString());
-		System.out.println("List Size: " + list.size());
+		System.out.println("List Size: " + list.size());*/
+		
+		// Above was to test the unordered list on strings.
+		
+		
+		/*MyStack<Integer> stack = new MyStack<Integer>();
+		
+		stack.push(1);
+		stack.push(2);
+		stack.push(3);
+		
+		// Expected Result: 3, 2, 1, null
+		System.out.println(stack.peek());
+		stack.pop();
+		System.out.println(stack.peek());
+		stack.pop();
+		System.out.println(stack.peek());
+		stack.pop();
+		System.out.println(stack.peek());*/
+		
+		// Above was to test the stack on integers
+		
+		/*MyStack<String> stack = new MyStack<String>();
+		
+		stack.push("Apple");
+		stack.push("Orange"); {
+		stack.push("Pear");
+		
+		// Expected Result: Pear, Orange, Apple, null
+		System.out.println(stack.peek());
+		stack.pop();
+		System.out.println(stack.peek());
+		stack.pop();
+		System.out.println(stack.peek());
+		stack.pop();
+		System.out.println(stack.peek());
+		*/
+		
+		// Above was to test the stack on Strings.
+		
+		MyUnorderedList<Integer> list = new MyUnorderedList<Integer>();
+		try {
+			FileReader fr = new FileReader("6i.txt");
+			BufferedReader br = new BufferedReader(fr);
+			String [] split = br.readLine().split(",");
+			for(int i = 0; i < split.length; i++) {
+				list.insertAtRear(Integer.parseInt(split[i]));
+			}
+			System.out.println(list.toString());
+		}catch(FileNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 }

@@ -52,6 +52,8 @@ public class FileCreator {
 			default:
 				throw new IOException();
 			}
+		
+		fileWriter.close();
 		}
 	
 	
