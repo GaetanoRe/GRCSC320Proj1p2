@@ -145,7 +145,7 @@ public class MainProgram {
 		
 		MyUnorderedList<Integer> list = new MyUnorderedList<Integer>();
 		try {
-			FileReader fr = new FileReader("6i.txt");
+			FileReader fr = new FileReader("3i.txt");
 			BufferedReader br = new BufferedReader(fr);
 			String [] split = br.readLine().split(",");
 			for(int i = 0; i < split.length; i++) {
