@@ -17,43 +17,44 @@ public class MyUnorderedList<T> {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	public void insertAtFront(T t) {
-		if(size + 1 >= list.length) {
+		if(size == list.length - 1) {
 			resizeList();
 		}
+		size++;
 		if(size != 0) {
-			T temp = (T) list[1];
-			for(int i = size - 1; i >= 0; i--) {
-				list[i - 1] = list[i];
+			for(int i = size - 1; i != 0; i--) {
+				list[i] = list[i - 1];
 			}
 		}
 		
 		list[0] = t;
+		
 	}
 	
 	public void insertAtRear(T t) {
-		if(size + 1 >= list.length) {
+		if(size == list.length - 1) {
 			resizeList();
 		}
 		list[size] = t;
+		size++;
 	}
 	
 	public void insertAt(int index, T t) {
-		if(size + 1 >= list.length) {
+		if(size == list.length - 1) {
 			resizeList();
 		}
-		for(int i = size - 1; i != index ; i--) {
-			list[i - 1] = list[i]; 
+		size++;
+		for(int i = size; i != index; i--) {
+			list[i] = list[i - 1];
 		}
-		
 		list[index] = t;
 	}
 	
 	public T removeFromFront() {
 		if(size != 0) {
 			T item = (T) list[0];
-			for(int i = 0; i < list.length; i++){
+			for(int i = 0; i < list.length && list[i] != null; i++){
 				list[i] = list[i + 1];
 			}
 			size--;
@@ -67,13 +68,23 @@ public class MyUnorderedList<T> {
 		if(size != 0) {
 			T item = (T) list[size - 1];
 			list[size - 1] = 0;
+			size--;
 			return item;
 		}
 		
 		return null;
 	}
 	
-	public T removeAt(int index, T t) {
+	public T removeAt(int index) {
+		
+		if(index < size && size != 0) {
+			T item = (T) list[index];
+			for(int i = index; i < list.length && list[i] != null; i++) {
+				list[i] = list[i + 1];
+			}
+			size--;
+			return item;
+		}
 		return null;
 	}
 	
@@ -81,6 +92,15 @@ public class MyUnorderedList<T> {
 		return this.size;
 	}
 	
+	public String toString() {
+		StringBuilder strbld = new StringBuilder();
+		for(int i = 0; i < size; i++) {
+			strbld.append(list[i]);
+			strbld.append(", ");
+		}
+		
+		return strbld.toString();
+	}
 	
 	@SuppressWarnings("unchecked")
 	private void resizeList() {
@@ -91,4 +111,6 @@ public class MyUnorderedList<T> {
 		
 		list = newList;
 	}
+	
+	
 }
