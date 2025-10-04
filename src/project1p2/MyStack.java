@@ -1,6 +1,8 @@
 package project1p2;
 
 public class MyStack <T>{
+	
+	@SuppressWarnings("hiding")
 	private class Node <T>{
 		private T data;
 		private Node<T> next;
@@ -30,12 +32,6 @@ public class MyStack <T>{
 		public void setNext(Node<T> next) {
 			this.next = next;
 		}
-		
-		public String toString() {
-			StringBuilder strbld = new StringBuilder();
-			strbld.append(data);
-			return strbld.toString();
-		}
 	}
 	
 	private Node<T> head;
@@ -46,32 +42,63 @@ public class MyStack <T>{
 		size = 0;
 	}
 	
-	public void push(T data) {
+	public int push(T data) {
+		int count = 0;
 		if(head == null) {
 			head = new Node<T>(data, null);
+			count++;
 		}
 		else {
 			Node<T> temp = new Node<T>(data, head);
+			count++;
 			head = temp;
+			count++;
 		}
 		size++;
+		
+		return count;
 	}
 	
-	public T pop() {
+	public int pop() {
+		int count = 0;
 		if(head != null) {
 			Node<T> temp = head;
+			count++;
 			head = head.getNext();
+			count++;
 			size--;
-			return temp.getData();
+			count++;
 		}
-		return null;
+		return count;
 	}
 	
-	public T peek() {
+	public int peek() {
+		int count = 0;
+		T tempData;
+		count++;
 		if(head != null) {
-			return head.getData();
+			tempData = head.getData();
+			count++;
 		}
-		return null;
+		else {
+			tempData = null;
+			count++;
+		}
+		return count;
+	}
+	
+	public int emptyStack() {
+		int count = 0;
+		while(!isEmpty()) {
+			pop();
+			count++;
+		}
+		
+		return count;
+	}
+	
+	public boolean isEmpty() {
+		return head == null;
 	}
 	
 	

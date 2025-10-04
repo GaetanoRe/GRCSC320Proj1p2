@@ -1,15 +1,14 @@
 package project1p2;
 import java.io.*;
+import java.util.*;
 public class MainProgram {
 	public static void main(String args []) {
 		
 		/*
 		 * The comments below are a series of tests I did to make sure the data structures I utilized in the experiment
-		 * worked, since I had no access to any data structure I created in CS2. I wanted to make sure the methods worked as intended to get my
-		 * results accurate.
+		 * worked, since I had no access to any data structure I created in CS2. I wanted to make sure the methods worked as intended to get accurate
+		 * results.
 		 */
-		
-		
 		
 		/*MyUnorderedList<Integer> list = new MyUnorderedList<Integer>(4);
 		
@@ -143,22 +142,54 @@ public class MainProgram {
 		
 		// Above was to test the stack on Strings.
 		
-		MyUnorderedList<Integer> list = new MyUnorderedList<Integer>();
-		try {
-			FileReader fr = new FileReader("3i.txt");
-			BufferedReader br = new BufferedReader(fr);
-			String [] split = br.readLine().split(",");
-			for(int i = 0; i < split.length; i++) {
-				list.insertAtRear(Integer.parseInt(split[i]));
+		// And now, for the actual program
+		
+		// Reference the current directory. In many filesystems, it is named, "."
+		File currentDirectory = new File(".");
+		
+		// A Linked list, unrelated to the test that will contain the references to test data.
+		LinkedList<String> filesToTest = new LinkedList<String>();
+		
+		// This is a string representation of the current directory that the program is in.
+		String [] directoryListings = currentDirectory.list();
+		
+		// Any file that is a .txt file in the current directory is added to the list of test files.
+		for(int i = 0; i < directoryListings.length; i++) {
+			if(directoryListings[i].contains("i.txt") || directoryListings[i].contains("s.txt")) {
+				filesToTest.add(directoryListings[i]);
 			}
-			System.out.println(list.toString());
-		}catch(FileNotFoundException ex) {
-			ex.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
+		
+		// Display the text files to confirm that they are loaded in the program.
+		System.out.println("The test files being utilized:");
+		for(int i = 0; i < filesToTest.size(); i++) {
+			System.out.println(filesToTest.get(i));
+		}
+		
+		System.out.println("\nInitializing both Data Structures");
+		
+		// These data structures will be instantiated according to the current test file's data type.
+		MyUnorderedList<Integer> intList = new MyUnorderedList<Integer>();
+		MyUnorderedList<String> strList = new MyUnorderedList<String>();
+		MyStack<Integer> intStack;
+		MyStack<String> strStack;
+		
+		// Initializing the file pointer to the file being tested in the loop.
+		File fileBeingTested;
+		int bVal = 0;
+		
+		for(int i = 0; i < filesToTest.size(); i++) {
+			String currentFilename = filesToTest.get(i);
+			fileBeingTested = new File(currentFilename);
+			System.out.println("--------------------------Test on File: " + currentFilename + "----------------------------");
+			System.out.println("Now Testing: Unordered List");
+			if(currentFilename.contains("s.txt")) {
+				bVal = Integer.parseInt(currentFilename.split("s.txt")[0]);
+				System.out.println("" + Math.pow(10, bVal) + " strings are in this file");
+				
+			}
+		}
 		
 	}
 }

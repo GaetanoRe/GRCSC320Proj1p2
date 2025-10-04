@@ -17,85 +17,127 @@ public class MyUnorderedList<T> {
 	}
 	
 	
-	public void insertAtFront(T t) {
+	public int insertAtFront(T t) {
+		
+		int count = 0;
+		
 		if(size == list.length - 1) {
-			resizeList();
+			count += resizeList();
 		}
 		size++;
+		count++;
 		if(size != 0) {
 			for(int i = size - 1; i != 0; i--) {
 				list[i] = list[i - 1];
+				count++;
 			}
 		}
-		
 		list[0] = t;
+		count++;
+		
+		return count;
 		
 	}
 	
-	public void insertAtRear(T t) {
+	public int insertAtRear(T t) {
+		int count = 0;
 		if(size == list.length - 1) {
-			resizeList();
+			count += resizeList();
 		}
 		list[size] = t;
+		count++;
 		size++;
+		count++;
+		
+		return count;
+		
 	}
 	
-	public void insertAt(int index, T t) {
+	public int insertAt(int index, T t) {
+		
+		int count = 0;
+		
 		if(size == list.length - 1) {
-			resizeList();
+			count += resizeList();
 		}
 		size++;
+		count++;
 		for(int i = size; i != index; i--) {
 			list[i] = list[i - 1];
+			count++;
 		}
 		list[index] = t;
+		count++;
+		
+		return count;
 	}
 	
-	public T removeFromFront() {
+	public int removeFromFront() {
+		
+		int count = 0;
+		
 		if(size != 0) {
 			T item = (T) list[0];
+			count++;
 			for(int i = 0; i < list.length && list[i] != null; i++){
 				list[i] = list[i + 1];
+				count++;
 			}
 			size--;
-			return item;
+			count++;
+			//return item;
 		}
 		
-		return null;	
+		return count;	
 	}
 	
-	public T removeFromRear() {
+	public int removeFromRear() {
+		
+		int count = 0;
+		
 		if(size != 0) {
 			T item = (T) list[size - 1];
+			count++;
 			list[size - 1] = 0;
+			count++;
 			size--;
-			return item;
+			count++;
+			// return item;
 		}
 		
-		return null;
+		return count;
 	}
 	
-	public T removeAt(int index) {
+	public int removeAt(int index) {
+		
+		int count = 0;
 		
 		if(index < size && size != 0) {
 			T item = (T) list[index];
+			count++;
 			for(int i = index; i < list.length && list[i] != null; i++) {
 				list[i] = list[i + 1];
+				count++;
 			}
 			size--;
-			return item;
+			count++;
+			// return item;
 		}
-		return null;
+		return count;
 	}
 	
 	public int indexOf(T value) {
+		
+		int count = 0;
+		
 		for(int i = 0; i < size; i++) {
+			count++;
 			if(value == list[i]) {
-				return i;
+				return count;
 			}
 		}
 		
-		return -1;
+		return count;
 	}
 	
 	public int size() {
@@ -112,14 +154,27 @@ public class MyUnorderedList<T> {
 		return strbld.toString();
 	}
 	
+	public boolean isEmpty() {
+		return list[0] == null;
+	}
+	
 	@SuppressWarnings("unchecked")
-	private void resizeList() {
+	private int resizeList() {
+		
+		int count = 0;
+		
 		T[] newList = (T[]) new Object[list.length * 2];
+		++count;
+		
 		for(int i = 0; i < list.length; i++) {
 			newList[i] = (T) list[i];
+			++count;
 		}
 		
 		list = newList;
+		count++;
+		
+		return count;
 	}
 	
 	
