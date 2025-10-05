@@ -153,6 +153,9 @@ public class MainProgram {
 		// This is a string representation of the current directory that the program is in.
 		String [] directoryListings = currentDirectory.list();
 		
+		// This is the file Reader. It will read the files and insert them into the given data structures.
+		FileReader fr;
+		
 		// Any file that is a .txt file in the current directory is added to the list of test files.
 		for(int i = 0; i < directoryListings.length; i++) {
 			if(directoryListings[i].contains("i.txt") || directoryListings[i].contains("s.txt")) {
@@ -177,19 +180,45 @@ public class MainProgram {
 		
 		// Initializing the file pointer to the file being tested in the loop.
 		File fileBeingTested;
-		int bVal = 0;
 		
-		for(int i = 0; i < filesToTest.size(); i++) {
-			String currentFilename = filesToTest.get(i);
-			fileBeingTested = new File(currentFilename);
-			System.out.println("--------------------------Test on File: " + currentFilename + "----------------------------");
-			System.out.println("Now Testing: Unordered List");
-			if(currentFilename.contains("s.txt")) {
-				bVal = Integer.parseInt(currentFilename.split("s.txt")[0]);
-				System.out.println("" + Math.pow(10, bVal) + " strings are in this file");
-				
+		// Initializing the StringBuilder
+		StringBuilder strbld;
+		
+		int bVal = 0;
+		int primOp = 0;
+		try {
+			for(int i = 0; i < filesToTest.size(); i++) {
+				String currentFilename = filesToTest.get(i);
+				fileBeingTested = new File(currentFilename);
+				System.out.println("--------------------------Test on File: " + currentFilename + "------------------------------");
+				System.out.println("Now Reading " + currentFilename +"...");
+				int currentChar = 0;
+				fr = new FileReader(currentFilename);
+				strbld = new StringBuilder();
+				while(currentChar != -1) {
+					currentChar = fr.read();
+					strbld.append((char) currentChar);
+				}
+				String [] fileContents = strbld.toString().split(",");
+				System.out.println("Now Testing: Unordered List");
+				if(currentFilename.contains("s.txt")) {
+					bVal = Integer.parseInt(currentFilename.split("s.txt")[0]);
+					System.out.println("" + Math.pow(10, bVal) + " strings are in this file");
+					for(int j = 0; j < fileContents.length; j++) {
+						primOp += strList.insertAtRear(fileContents[j]);
+					}
+					System.out.println("Primitive Operations Required to insert all elements: " + primOp);
+					primOp = strList.getAtIndex(0);
+					System.out.println("Primitive Operations Required to find the first value in the data file: " + strList);
+					
+				}
 			}
+		}catch(FileNotFoundException ex) {
+			ex.printStackTrace();
+		}catch(IOException ex) {
+			ex.printStackTrace();
 		}
+		
 		
 	}
 }

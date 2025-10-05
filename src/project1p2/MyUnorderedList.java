@@ -158,6 +158,13 @@ public class MyUnorderedList<T> {
 		return list[0] == null;
 	}
 	
+	public int getAtIndex(int index) {
+		int count = 0;
+		T value = (T) list[index];
+		count++;
+		return count;
+	}
+	
 	@SuppressWarnings("unchecked")
 	private int resizeList() {
 		
