@@ -155,6 +155,7 @@ public class MainProgram {
 		
 		// This is the file Reader. It will read the files and insert them into the given data structures.
 		FileReader fr;
+		Scanner sc;
 		
 		// Any file that is a .txt file in the current directory is added to the list of test files.
 		for(int i = 0; i < directoryListings.length; i++) {
@@ -173,8 +174,8 @@ public class MainProgram {
 		System.out.println("\nInitializing both Data Structures");
 		
 		// These data structures will be instantiated according to the current test file's data type.
-		MyUnorderedList<Integer> intList = new MyUnorderedList<Integer>();
-		MyUnorderedList<String> strList = new MyUnorderedList<String>();
+		MyUnorderedList<Integer> intList;
+		MyUnorderedList<String> strList;
 		MyStack<Integer> intStack;
 		MyStack<String> strStack;
 		
@@ -192,26 +193,107 @@ public class MainProgram {
 				fileBeingTested = new File(currentFilename);
 				System.out.println("--------------------------Test on File: " + currentFilename + "------------------------------");
 				System.out.println("Now Reading " + currentFilename +"...");
-				int currentChar = 0;
 				fr = new FileReader(currentFilename);
-				strbld = new StringBuilder();
-				while(currentChar != -1) {
-					currentChar = fr.read();
-					strbld.append((char) currentChar);
-				}
-				String [] fileContents = strbld.toString().split(",");
-				System.out.println("Now Testing: Unordered List");
+				sc = new Scanner(fr);
+				String fileStr = sc.nextLine();
+				
+				String [] fileContents = fileStr.split(",");
 				if(currentFilename.contains("s.txt")) {
+					strList = new MyUnorderedList<String>();
+					strStack = new MyStack<String>();
+					System.out.println("Now Testing: Unordered Array List for " + currentFilename);
 					bVal = Integer.parseInt(currentFilename.split("s.txt")[0]);
 					System.out.println("" + Math.pow(10, bVal) + " strings are in this file");
 					for(int j = 0; j < fileContents.length; j++) {
 						primOp += strList.insertAtRear(fileContents[j]);
 					}
+					int key = 0;
 					System.out.println("Primitive Operations Required to insert all elements: " + primOp);
-					primOp = strList.getAtIndex(0);
-					System.out.println("Primitive Operations Required to find the first value in the data file: " + strList);
+					primOp = 0;
+					
+					System.out.println("Primitive Operations Required to find the value at index " + key + " in the data file: " + strList.getAtIndex(key));
+					for(; key < strList.size(); key++) {
+						primOp += strList.getAtIndex(key);
+					}
+					System.out.println("Primitive Operations Required to find the value at all indexes: " + primOp);
+					
+					primOp = 0;
+					while(!strList.isEmpty()) {
+						primOp += strList.removeFromRear();
+					}
+					System.out.println("Primitive Operations Required to Remove all elements: " + primOp);
+					System.out.println();
+					
+					primOp = 0;
+					System.out.println("Now testing: Node-Based Stack for " + currentFilename);
+					System.out.println("" + Math.pow(10, bVal) + " strings are in this file");
+					for(int j = 0; j < fileContents.length; j++) {
+						primOp += strStack.push(fileContents[j]);
+					}
+					System.out.println("Primitive Operations Required to insert all elements: " + primOp);
+					primOp = strStack.peek();
+					System.out.println("Primitive Operations Required to find first element: " + primOp);
+					
+					primOp = 0;
+					int primOpSearch = 0;
+					while(!strStack.isEmpty()) {
+						primOp += strStack.pop();
+						primOp += strStack.peek();
+						primOpSearch += primOp;
+						primOp = 0;
+					}
+					System.out.println("Operations Required for searching for the next element " + primOp);
+					System.out.println("Operations Required for emptying the entire stack is" + primOpSearch);
 					
 				}
+				else if(currentFilename.contains("i.txt")) {
+					intList = new MyUnorderedList<Integer>();
+					intStack = new MyStack<Integer>();
+					System.out.println("Now Testing: Unordered Array List for " + currentFilename);
+					bVal = Integer.parseInt(currentFilename.split("i.txt")[0]);
+					System.out.println("" + Math.pow(10, bVal) + " integers are in this file");
+					for(int j = 0; j < fileContents.length; j++) {
+						primOp += intList.insertAtRear(Integer.parseInt(fileContents[j]));
+					}
+					System.out.println("Primitive Operations Required to insert all elements: " + primOp);
+					int key = 0;
+					System.out.println("Primitive Operations Required to insert all elements: " + primOp);
+					primOp = 0;
+					
+					System.out.println("Primitive Operations Required to find the value at index " + key + " in the data file: " + intList.getAtIndex(key));
+					for(; key < intList.size(); key++) {
+						primOp += intList.getAtIndex(key);
+					}
+					System.out.println("Primitive Operations Required to find the value at all indexes: " + primOp);
+					primOp = 0;
+					while(!intList.isEmpty()) {
+						primOp += intList.removeFromRear();
+					}
+					System.out.println("Primitive Operations Required to Remove all elements: " + primOp);
+					System.out.println();
+					
+					primOp = 0;
+					System.out.println("Now testing: Node-Based Stack for " + currentFilename);
+					System.out.println("" + Math.pow(10, bVal) + " strings are in this file");
+					for(int j = 0; j < fileContents.length; j++) {
+						primOp += intStack.push(Integer.parseInt(fileContents[j]));
+					}
+					System.out.println("Primitive Operations Required to insert all elements: " + primOp);
+					primOp = intStack.peek();
+					System.out.println("Primitive Operations Required to find first element: " + primOp);
+					
+					primOp = 0;
+					int primOpSearch = 0;
+					while(!intStack.isEmpty()) {
+						primOp += intStack.pop();
+						primOp += intStack.peek();
+						primOpSearch += primOp;
+						primOp = 0;
+					}
+					System.out.println("Operations Required for searching for the next element " + primOpSearch);
+					System.out.println("Operations Required for emptying the entire stack is" + primOpSearch);
+				}
+				System.out.println("--------------------------Test on File: " + currentFilename + " has concluded-----------------");
 			}
 		}catch(FileNotFoundException ex) {
 			ex.printStackTrace();
