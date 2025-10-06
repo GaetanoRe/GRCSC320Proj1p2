@@ -35,10 +35,11 @@ public class FileCreator {
 		switch(command) { 
 			case 'i': // In the case the second argument is i
 				fileGen = new File("" + iterator + command + ".txt");
-				if(fileGen.createNewFile()) // If the file was created, then associate the file writer to the file.
-					fileWriter = new FileWriter(fileGen);// generate a new file
+				fileWriter = new FileWriter(fileGen);
+				fileWriter.write("");
 				for(int i = 0; i < Math.pow(10, iterator); i++) {
-					fileWriter.append(data.getRandInt(iterator) + ","); // Write the random integer values into the text file. 
+					fileWriter.append("" + data.getRandInt(iterator)); // Write the random integer values into the text file.
+					fileWriter.append(System.lineSeparator());
 				}
 				break;
 			case 's': // In the case the second argument is s
@@ -46,7 +47,8 @@ public class FileCreator {
 				if(fileGen.createNewFile()) // If the file was created, then associate the file writer to the file.
 					fileWriter = new FileWriter(fileGen);
 				for(int i = 0; i < Math.pow(10, iterator); i++) {
-						fileWriter.append(data.getRandomString() + ","); // Write the random string values into the text file.
+						fileWriter.append(data.getRandomString()); // Write the random string values into the text file.
+						fileWriter.append(System.lineSeparator());
 				}
 				break;
 			default:

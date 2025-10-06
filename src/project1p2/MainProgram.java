@@ -164,6 +164,8 @@ public class MainProgram {
 			}
 		}
 		
+		Collections.sort(filesToTest, new FilenameComparator());
+		
 		
 		// Display the text files to confirm that they are loaded in the program.
 		System.out.println("The test files being utilized:");
@@ -195,17 +197,14 @@ public class MainProgram {
 				System.out.println("Now Reading " + currentFilename +"...");
 				fr = new FileReader(currentFilename);
 				sc = new Scanner(fr);
-				String fileStr = sc.nextLine();
-				
-				String [] fileContents = fileStr.split(",");
 				if(currentFilename.contains("s.txt")) {
 					strList = new MyUnorderedList<String>();
 					strStack = new MyStack<String>();
 					System.out.println("Now Testing: Unordered Array List for " + currentFilename);
 					bVal = Integer.parseInt(currentFilename.split("s.txt")[0]);
 					System.out.println("" + Math.pow(10, bVal) + " strings are in this file");
-					for(int j = 0; j < fileContents.length; j++) {
-						primOp += strList.insertAtRear(fileContents[j]);
+					while(sc.hasNextLine()) {
+						primOp += strList.insertAtRear(sc.nextLine());
 					}
 					int key = 0;
 					System.out.println("Primitive Operations Required to insert all elements: " + primOp);
@@ -227,8 +226,10 @@ public class MainProgram {
 					primOp = 0;
 					System.out.println("Now testing: Node-Based Stack for " + currentFilename);
 					System.out.println("" + Math.pow(10, bVal) + " strings are in this file");
-					for(int j = 0; j < fileContents.length; j++) {
-						primOp += strStack.push(fileContents[j]);
+					fr = new FileReader(currentFilename);
+					sc = new Scanner(fr);
+					while(sc.hasNextLine()) {
+						primOp += strStack.push(sc.nextLine());
 					}
 					System.out.println("Primitive Operations Required to insert all elements: " + primOp);
 					primOp = strStack.peek();
@@ -236,14 +237,16 @@ public class MainProgram {
 					
 					primOp = 0;
 					int primOpSearch = 0;
+					int primOpEmpty = 0;
 					while(!strStack.isEmpty()) {
 						primOp += strStack.pop();
+						primOpEmpty += primOp;
 						primOp += strStack.peek();
 						primOpSearch += primOp;
 						primOp = 0;
 					}
-					System.out.println("Operations Required for searching for the next element " + primOp);
-					System.out.println("Operations Required for emptying the entire stack is" + primOpSearch);
+					System.out.println("Operations Required for searching for the next element: " + primOpSearch);
+					System.out.println("Operations Required for emptying the entire stack is: " + primOpEmpty);
 					
 				}
 				else if(currentFilename.contains("i.txt")) {
@@ -252,10 +255,9 @@ public class MainProgram {
 					System.out.println("Now Testing: Unordered Array List for " + currentFilename);
 					bVal = Integer.parseInt(currentFilename.split("i.txt")[0]);
 					System.out.println("" + Math.pow(10, bVal) + " integers are in this file");
-					for(int j = 0; j < fileContents.length; j++) {
-						primOp += intList.insertAtRear(Integer.parseInt(fileContents[j]));
+					while(sc.hasNextLine()) {
+						primOp += intList.insertAtRear(Integer.parseInt(sc.nextLine()));
 					}
-					System.out.println("Primitive Operations Required to insert all elements: " + primOp);
 					int key = 0;
 					System.out.println("Primitive Operations Required to insert all elements: " + primOp);
 					primOp = 0;
@@ -272,28 +274,35 @@ public class MainProgram {
 					System.out.println("Primitive Operations Required to Remove all elements: " + primOp);
 					System.out.println();
 					
+					fr = new FileReader(currentFilename);
+					sc = new Scanner(fr);
 					primOp = 0;
 					System.out.println("Now testing: Node-Based Stack for " + currentFilename);
 					System.out.println("" + Math.pow(10, bVal) + " strings are in this file");
-					for(int j = 0; j < fileContents.length; j++) {
-						primOp += intStack.push(Integer.parseInt(fileContents[j]));
+					while(sc.hasNextLine()) {
+						primOp += intStack.push(Integer.parseInt(sc.nextLine()));
 					}
 					System.out.println("Primitive Operations Required to insert all elements: " + primOp);
 					primOp = intStack.peek();
 					System.out.println("Primitive Operations Required to find first element: " + primOp);
-					
 					primOp = 0;
 					int primOpSearch = 0;
+					int primOpEmpty = 0;
 					while(!intStack.isEmpty()) {
+						// Adding the amount of primitive operations to pop from a stack.
 						primOp += intStack.pop();
+						primOpEmpty += primOp;
+						
+						// Adding the amount of operations it takes to peek.
 						primOp += intStack.peek();
 						primOpSearch += primOp;
 						primOp = 0;
 					}
 					System.out.println("Operations Required for searching for the next element " + primOpSearch);
-					System.out.println("Operations Required for emptying the entire stack is" + primOpSearch);
+					System.out.println("Operations Required for emptying the entire stack is: " + primOpEmpty);
 				}
 				System.out.println("--------------------------Test on File: " + currentFilename + " has concluded-----------------");
+				System.out.println();
 			}
 		}catch(FileNotFoundException ex) {
 			ex.printStackTrace();

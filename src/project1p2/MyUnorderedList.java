@@ -155,7 +155,7 @@ public class MyUnorderedList<T> {
 	}
 	
 	public boolean isEmpty() {
-		return list[0] == null;
+		return this.size == 0;
 	}
 	
 	public int getAtIndex(int index) {
